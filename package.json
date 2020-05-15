@@ -1,0 +1,24 @@
+{
+  "name": "quickstore-admin-server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "env-cmd": "^10.1.0",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.9.14",
+    "multer": "^1.4.2",
+    "passport": "^0.4.1",
+    "sharp": "^0.25.2",
+    "validator": "^13.0.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "dev" : "env-cmd  -f config/dev.env nodemon server.js"
+  },
+  "keywords": [],
+  "author": "praful <praful.chandra@yahoo.com>",
+  "license": "ISC"
+}
