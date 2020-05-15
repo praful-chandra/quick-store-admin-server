@@ -22,6 +22,7 @@ const ProductsSchema = new mongoose.Schema({
         default : 0,
         validate : {
             validator : (val)=>{
+                
                 if (val > 100 || val < 0) {
                     throw new Error("Discount is not Valid");
                   }
@@ -32,8 +33,7 @@ const ProductsSchema = new mongoose.Schema({
         type : mongoose.Types.ObjectId,
         required : true
     },
-    campaignId : mongoose.Types.ObjectId,
-    saleId : mongoose.Types.ObjectId
+
 })
 
 const Products = mongoose.model("product",ProductsSchema);

@@ -2,7 +2,8 @@ const express = require("express");
 require("./src/mongo/mongo");
 
 const authRoute = require("./src/routes/authRoute");
-const categoryRoute = require("./src/routes/shop.route");
+const addShopRoute = require("./src/routes/addshop.route");
+const updateShopRoute = require("./src/routes/updateShop.route");
 
 const app = express();
 
@@ -19,4 +20,5 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api/auth",authRoute);
-app.use("/api/shop",categoryRoute);
+app.use("/api/shop",addShopRoute);
+app.use("/api/shop",updateShopRoute);

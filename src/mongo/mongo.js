@@ -10,3 +10,6 @@ require("./models/admin.model");
 require("./models/category.model");
 require("./models/products.model");
 require("./models/campaign.model");
+require("./models/sales.model");
+require("./models/coupons.model");
+require("./models/order.model");
