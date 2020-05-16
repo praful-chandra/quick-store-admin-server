@@ -51,7 +51,7 @@ router.post(
       image,
     })
       .save()
-      .then((category) => res.status(201).json(category))
+      .then(() => res.status(201).json({success : true}))
       .catch((err) => res.status(500).json(err));
   }
 );
@@ -88,7 +88,7 @@ router.post(
       .save()
       .then(() => {
         newProduct.save().then((data) => {
-          res.json({ data });
+          res.status(201).json({success : true})
         });
       })
       .catch((err) => res.status(500).json({ error: "Server error" }));
@@ -127,7 +127,7 @@ router.post(
    
       newCampaign.save()
       .then((data) => {
-        res.status(201).json(data);
+        res.status(201).json({success : true})
       })
       .catch((err) => res.status(500).json(err));
   }
@@ -164,7 +164,7 @@ router.post(
 
       newSale.save()
       .then((data) => {
-        res.status(201).json(data);
+        res.status(201).json({success : true})
       })
       .catch((err) => res.status(500).json(err));
   }
@@ -187,7 +187,7 @@ router.post(
     })
       .save()
       .then((data) => {
-        res.status(201).json(data);
+        res.status(201).json({success : true})
       })
       .catch((err) => res.status(500).json(err));
   }

@@ -5,6 +5,7 @@ const SaltOrKey = process.env.SALT_OR_KEY;
 const Admin = mongoose.model("admin");
 
 const auth = async (req, res, next) => {
+  
   try {
     const userToken = req.headers.authorization.replace("Bearer ", "");
     const verifiedToken = await jsonWebToken.verify(userToken, SaltOrKey);
@@ -18,10 +19,13 @@ const auth = async (req, res, next) => {
       throw new Error("Auth Error");
     }
 
+
     req.admin = user;
     req.token = userToken;
     next();
   } catch (err) {
+
+
     res.status(401).json({
       error: "not AUthorized !",
     });
