@@ -14,6 +14,10 @@ const ProductsSchema = new mongoose.Schema(
       type: Number,
       required: true,
     },
+    status:{
+      type : Boolean,
+      default :false
+    },
     price: {
       type: Number,
       required: true,
@@ -33,6 +37,7 @@ const ProductsSchema = new mongoose.Schema(
       type: mongoose.Types.ObjectId,
       required: true,
     },
+    description: String,
   },
   {
     timestamps: true,

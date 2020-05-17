@@ -13,9 +13,7 @@ router.post("/allproducts", AuthMiddleware, async (req, res) => {
   const sort = req.body.sort ? req.body.sort : {};
   const limit = req.body.limit ? req.body.limit : 0;
   const skip = req.body.skip ? req.body.skip : 0;
-
-  console.log(only);
-  
+ 
   
   const products = await Product.find(only, filters)
     .sort(sort)

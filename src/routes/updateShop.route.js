@@ -34,7 +34,7 @@ router.patch(
   "/updateProduct",
   AuthMiddleware,
   upload.single("image"),
-  async (req, res) => {
+  async (req, res,next) => {
     const recived = req.body;
 
     const product = await Product.findById(recived._id);
@@ -47,7 +47,26 @@ router.patch(
 
       recived.image = image;
     }
-    if(recived.discount && (recived.discount > 100 || recived.discount < 0)) return res.status(400).json({error : "discount invalid"})
+    if (recived.discount && (recived.discount > 100 || recived.discount < 0))
+      return res.status(400).json({ error: "discount invalid" });
+
+    if (recived.categoryId !== product.categoryId) {
+      try {
+        const oldCategory = await Category.findById(product.categoryId);
+        oldCategory.Products = oldCategory.Products.filter(id=>id != recived._id);
+        
+        (await oldCategory).save();
+
+        const newCategory = await Category.findById(recived.categoryId);
+        newCategory.Products.push(product._id);
+
+        (await newCategory).save();
+      } catch(err) {
+        console.log(err);
+        
+        return next(new Error(err));
+      }
+    }
 
     product
       .updateOne({ ...recived })
@@ -97,7 +116,8 @@ router.patch("/updateCoupon", AuthMiddleware, async (req, res) => {
   if (recived.items) {
     recived.items = await chekAllProdExist(recived.items);
   }
-  if(recived.discount && (recived.discount > 100 || recived.discount < 0)) return res.status(400).json({error : "discount invalid"})
+  if (recived.discount && (recived.discount > 100 || recived.discount < 0))
+    return res.status(400).json({ error: "discount invalid" });
 
   coupon
     .updateOne({ ...recived })
@@ -129,7 +149,6 @@ router.patch(
 
     if (recived.items) recived.items = await chekAllProdExist(recived.items);
 
-
     campaign
       .updateOne({ ...recived })
       .then((data) => {
@@ -142,49 +161,55 @@ router.patch(
 );
 
 router.patch(
-    "/updatesale",
-    AuthMiddleware,
-    upload.single("image"),
-    async (req, res) => {
-      const recived = req.body;
-  
-      const sale = await Sale.findById(recived._id);
-  
-      if (req.file) {
-        const image = await sharp(req.file.buffer)
-          .resize({ width: 500, height: 500 })
-          .png()
-          .toBuffer();
-  
-        recived.image = image;
-      }
-  
-      if (recived.items) recived.items = await chekAllProdExist(recived.items);
-      
-      if(recived.discount && (recived.discount > 100 || recived.discount < 0)) return res.status(400).json({error : "discount invalid"})
-  
-      sale
-        .updateOne({ ...recived })
-        .then((data) => {
-          res.json(data);
-        })
-        .catch((err) => {
-          res.json(err);
-        });
-    }
-  );
+  "/updatesale",
+  AuthMiddleware,
+  upload.single("image"),
+  async (req, res) => {
+    const recived = req.body;
 
-router.patch("/updateorders",AuthMiddleware,(req,res)=>{
-    if(!req.body.status || !req.body._id){
-    return    res.send();
+    const sale = await Sale.findById(recived._id);
+
+    if (req.file) {
+      const image = await sharp(req.file.buffer)
+        .resize({ width: 500, height: 500 })
+        .png()
+        .toBuffer();
+
+      recived.image = image;
     }
 
-    Order.findByIdAndUpdate(req.body._id,{$set :{orderStatus : req.body.status}}).then(data=>{
-        res.json(data)
-    }).catch(err=>res.status(500).json("err"))
+    if (recived.items) recived.items = await chekAllProdExist(recived.items);
 
+    if (recived.discount && (recived.discount > 100 || recived.discount < 0))
+      return res.status(400).json({ error: "discount invalid" });
 
+    sale
+      .updateOne({ ...recived })
+      .then((data) => {
+        res.json(data);
+      })
+      .catch((err) => {
+        res.json(err);
+      });
+  }
+);
 
-})
+router.patch("/updateorders", AuthMiddleware, (req, res) => {
+  if (!req.body.status || !req.body._id) {
+    return res.send();
+  }
+
+  Order.findByIdAndUpdate(req.body._id, {
+    $set: { orderStatus: req.body.status },
+  })
+    .then((data) => {
+      res.json(data);
+    })
+    .catch((err) => res.status(500).json("err"));
+});
+
+router.use((err, req, res, next) => {
+  res.status(400).json({ error: err.message });
+});
 
 module.exports = router;
