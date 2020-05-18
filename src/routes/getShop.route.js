@@ -20,7 +20,7 @@ router.post("/allproducts", AuthMiddleware, async (req, res) => {
     .limit(limit)
     .skip(skip);
 
-    const totalCount = await Product.find(only, filters).sort(sort).estimatedDocumentCount();
+    const totalCount = await Product.find(only, filters).sort(sort).countDocuments();
 
 
   res.status(200).json({products,totalCount});
