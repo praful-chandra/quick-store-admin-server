@@ -53,6 +53,14 @@ ProductsSchema.pre("remove", async function (next) {
   next();
 });
 
+ProductsSchema.methods.toJSON = function(){
+  const product = this.toObject();
+
+  product.image = `/api/serveImage/product/${product._id}`
+  
+  return product;
+}
+
 const Products = mongoose.model("product", ProductsSchema);
 
 module.exports = Products;

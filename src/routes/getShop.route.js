@@ -14,7 +14,7 @@ router.post("/allproducts", AuthMiddleware, async (req, res) => {
   const limit = req.body.limit ? req.body.limit : 0;
   const skip = req.body.skip ? req.body.skip : 0;
  
-  
+
   const products = await Product.find(only, filters)
     .sort(sort)
     .limit(limit)
@@ -32,6 +32,7 @@ router.post("/allcategories", AuthMiddleware, async (req, res) => {
   const sort = req.body.sort ? req.body.sort : {};
   const limit = req.body.limit ? req.body.limit : 0;
   const skip = req.body.skip ? req.body.skip : 0;
+
   const category = await Category.find(only, filters)
     .sort(sort)
     .limit(limit)

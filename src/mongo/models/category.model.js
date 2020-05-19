@@ -12,6 +12,8 @@ const CategorySchema = new mongoose.Schema({
     required: true,
   },
   Products: [],
+},{
+  timestamps : true
 });
 
 CategorySchema.pre("remove",async(next)=>{
@@ -22,6 +24,13 @@ CategorySchema.pre("remove",async(next)=>{
 
   next();
 })
+
+CategorySchema.methods.toJSON = function(){
+  const category = this.toObject();
+
+ category.image = `/api/serveImage/category/${category._id}`
+  return category;
+}
 
 const Category = mongoose.model("category", CategorySchema);
 module.exports = Category;

@@ -5,6 +5,8 @@ const authRoute = require("./src/routes/authRoute");
 const addShopRoute = require("./src/routes/addshop.route");
 const updateShopRoute = require("./src/routes/updateShop.route");
 const getShopRoute = require("./src/routes/getShop.route");
+const serveImageRoute = require("./src/routes/serveImage.route");
+
 const app = express();
 
 const PORT = process.env.PORT;
@@ -23,3 +25,5 @@ app.use("/api/admin/auth",authRoute);
 app.use("/api/admin/shop",addShopRoute);
 app.use("/api/admin/shop",updateShopRoute);
 app.use("/api/admin/get",getShopRoute);
+
+app.use("/api/serveImage/",serveImageRoute);
