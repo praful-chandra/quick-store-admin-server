@@ -147,8 +147,7 @@ router.patch(
       recived.image = image;
     }
 
-    if (recived.items) recived.items = await chekAllProdExist(recived.items);
-
+    if (recived.items) recived.items = await chekAllProdExist(recived.items);    
     campaign
       .updateOne({ ...recived })
       .then((data) => {

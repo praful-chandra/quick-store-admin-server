@@ -10,10 +10,15 @@ module.exports = async (prodList) => {
     if (mongoose.isValidObjectId(item)) return item;
   });
 
-  productsExist = await Product.find({ _id: { $in: prodList } }, { _id: 1 });
+  productsExist = await Product.find({ _id: { $in: prodList } }, { _id: 1 , name:1 });
+
+  
 
   const productsFinal = productsExist.map((data) =>
-    mongoose.Types.ObjectId(data.id.trim())
+  (  {_id : data._id,
+      name : data.name,
+      image : `/api/serveImage/product${data._id}`
+    })
   );
 
   return productsFinal;
