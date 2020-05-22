@@ -6,6 +6,7 @@ const AuthMiddleware = require("../middleware/authMiddleWare");
 
 const Product = mongoose.model("product");
 const Category = mongoose.model("category");
+const Campaign = mongoose.model("campaign");
 
 router.post("/allproducts", AuthMiddleware, async (req, res) => {
   const filters = req.body.filters ? req.body.filters : {};
@@ -13,17 +14,17 @@ router.post("/allproducts", AuthMiddleware, async (req, res) => {
   const sort = req.body.sort ? req.body.sort : {};
   const limit = req.body.limit ? req.body.limit : 0;
   const skip = req.body.skip ? req.body.skip : 0;
- 
 
   const products = await Product.find(only, filters)
     .sort(sort)
     .limit(limit)
     .skip(skip);
 
-    const totalCount = await Product.find(only, filters).sort(sort).countDocuments();
+  const totalCount = await Product.find(only, filters)
+    .sort(sort)
+    .countDocuments();
 
-
-  res.status(200).json({products,totalCount});
+  res.status(200).json({ products, totalCount });
 });
 
 router.post("/allcategories", AuthMiddleware, async (req, res) => {
@@ -39,6 +40,21 @@ router.post("/allcategories", AuthMiddleware, async (req, res) => {
     .skip(skip);
 
   res.status(200).json(category);
+});
+
+router.post("/allcampaign", AuthMiddleware, async (req, res) => {
+  const only = req.body.only ? req.body.only : {};
+  const filters = req.body.filters ? req.body.filters : {};
+  const sort = req.body.sort ? req.body.sort : {};
+  const limit = req.body.limit ? req.body.limit : 0;
+  const skip = req.body.skip ? req.body.skip : 0;
+
+  const campaign = await Campaign.find(only, filters)
+    .sort(sort)
+    .limit(limit)
+    .skip(skip);
+
+  res.status(200).json(campaign);
 });
 
 module.exports = router;

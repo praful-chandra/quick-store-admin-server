@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 
 const Product = mongoose.model("product");
 const Category = mongoose.model("category");
+const Campaign = mongoose.model("campaign");
 
 router.get("/product/:id",async (req,res)=>{
 
@@ -39,7 +40,21 @@ router.get("/category/:id",async (req,res)=>{
 })
 
 
+router.get("/campaign/:id",async (req,res)=>{
 
+    try{
+        const imageBuffer = await Campaign.findById(req.params.id,{image : 1})
+ 
+        res.set('Content-Type','image/png');
+        res.send(imageBuffer.image)
+    }   
+    catch (err){
+        
+        res.status(404).send(err)
+    } 
+
+    
+})
 
 
 

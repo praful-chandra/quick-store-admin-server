@@ -22,7 +22,14 @@ const CampaignSchema = new mongoose.Schema({
       required : true
   },
   items : []
-});
+},{timestamps : true});
+
+CampaignSchema.methods.toJSON = function(){
+  const campaign = this.toObject();
+
+  campaign.image = `/api/serveImage/campaign/${campaign._id}`;
+  return campaign;
+}
 
 
 const Campaign = mongoose.model("campaign",CampaignSchema);
