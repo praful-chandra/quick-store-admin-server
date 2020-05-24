@@ -182,12 +182,17 @@ router.post(
       return res.status(400).json({ error: "required fields not found" });
 
 
-    new Coupon({
-      ...recived
+   const newCoupon =  new Coupon({
+      ...recived,
     })
-      .save()
+
+
+
+  newCoupon.expiry = new Date(recived.expiry)
+      
+      newCoupon.save()
       .then((data) => {
-        res.status(201).json({success : true})
+        res.status(201).json({success : true , _id : data._id})
       })
       .catch((err) => res.status(500).json(err));
   }

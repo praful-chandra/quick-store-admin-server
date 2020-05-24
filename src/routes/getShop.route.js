@@ -10,6 +10,7 @@ const Product = mongoose.model("product");
 const Category = mongoose.model("category");
 const Campaign = mongoose.model("campaign");
 const Sale = mongoose.model("sale");
+const Coupon = mongoose.model("coupon");
 
 router.post("/allproducts", AuthMiddleware, async (req, res) => {
   const { filters, only, sort, limit, skip } = getOptions(req.body);
@@ -58,4 +59,18 @@ router.post("/allsale", AuthMiddleware, async (req, res) => {
 
   res.status(200).json(sale);
 });
+
+
+router.post("/allcoupon", AuthMiddleware, async (req, res) => {
+  const { filters, only, sort, limit, skip } = getOptions(req.body);
+
+  const coupon = await Coupon.find(only, filters)
+    .sort(sort)
+    .limit(limit)
+    .skip(skip);
+
+  res.status(200).json(coupon);
+});
+
+
 module.exports = router;

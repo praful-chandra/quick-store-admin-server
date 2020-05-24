@@ -1,5 +1,10 @@
 const mongoose = require("mongoose");
 
+const zeroNumber  ={
+    type: Number,
+    default: 0,
+  }
+
 const couponSchema = new mongoose.Schema({
     name:{
         type : String,
@@ -14,14 +19,18 @@ const couponSchema = new mongoose.Schema({
         type : Boolean,
         default : false
     },
-    remainingCoupons:{
-        type : Number,
-        default : 0
-    },
+    remainingCoupons:zeroNumber,
     items : [],
-    upTo :{
-        type : Number,
-        default : 0
+    upTo :zeroNumber,
+    discount : {
+        ...zeroNumber,
+        validate : {
+            validator : (val)=>{
+                if (val > 100 || val < 0) {
+                    throw new Error("Discount is not Valid");
+                  }
+            }
+        }
     },
     expiry: Date
 },{
