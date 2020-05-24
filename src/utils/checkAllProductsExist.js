@@ -17,7 +17,7 @@ module.exports = async (prodList) => {
   const productsFinal = productsExist.map((data) =>
   (  {_id : data._id,
       name : data.name,
-      image : `/api/serveImage/product${data._id}`
+      image : `/api/serveImage/product/${data._id}`
     })
   );
 

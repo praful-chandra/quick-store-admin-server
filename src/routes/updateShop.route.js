@@ -4,6 +4,7 @@ const router = express.Router();
 const multer = require("multer");
 const sharp = require("sharp");
 const AuthMiddleware = require("../middleware/authMiddleWare");
+
 const Category = mongoose.model("category");
 const Product = mongoose.model("product");
 const Campaign = mongoose.model("campaign");
@@ -34,7 +35,7 @@ router.patch(
   "/updateProduct",
   AuthMiddleware,
   upload.single("image"),
-  async (req, res,next) => {
+  async (req, res, next) => {
     const recived = req.body;
 
     const product = await Product.findById(recived._id);
@@ -53,17 +54,19 @@ router.patch(
     if (recived.categoryId !== product.categoryId) {
       try {
         const oldCategory = await Category.findById(product.categoryId);
-        oldCategory.Products = oldCategory.Products.filter(id=>id != recived._id);
-        
+        oldCategory.Products = oldCategory.Products.filter(
+          (id) => id != recived._id
+        );
+
         (await oldCategory).save();
 
         const newCategory = await Category.findById(recived.categoryId);
         newCategory.Products.push(product._id);
 
         (await newCategory).save();
-      } catch(err) {
+      } catch (err) {
         console.log(err);
-        
+
         return next(new Error(err));
       }
     }
@@ -147,7 +150,7 @@ router.patch(
       recived.image = image;
     }
 
-    if (recived.items) recived.items = await chekAllProdExist(recived.items);    
+    if (recived.items) recived.items = await chekAllProdExist(recived.items);
     campaign
       .updateOne({ ...recived })
       .then((data) => {
@@ -176,7 +179,7 @@ router.patch(
 
       recived.image = image;
     }
-
+    
     if (recived.items) recived.items = await chekAllProdExist(recived.items);
 
     if (recived.discount && (recived.discount > 100 || recived.discount < 0))

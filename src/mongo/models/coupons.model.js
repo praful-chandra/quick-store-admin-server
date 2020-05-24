@@ -18,7 +18,14 @@ const couponSchema = new mongoose.Schema({
         type : Number,
         default : 0
     },
-    items : []
+    items : [],
+    upTo :{
+        type : Number,
+        default : 0
+    },
+    expiry: Date
+},{
+    timestamps : true
 })
 
 const Coupon = mongoose.model("coupon",couponSchema);

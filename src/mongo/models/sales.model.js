@@ -31,7 +31,17 @@ const SalesSchema = new mongoose.Schema({
         default : false
     },
     items : []
+},{
+    timestamps : true
 });
+
+SalesSchema.methods.toJSON = function(){
+    sale = this.toObject();
+
+    sale.image = `/api/serveImage/sale/${sale._id}`
+
+    return sale;
+}
 
 
 const Sales = mongoose.model("sale",SalesSchema);
