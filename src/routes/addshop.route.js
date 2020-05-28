@@ -15,7 +15,8 @@ const doesContain = require("../utils/doesContain.util");
 
 const upload = multer({
   limits: {
-    fileSize: 1000000 * 2,
+    fileSize: 1048576
+     * 2,
   },
   fileFilter(req, file, next) {
     if (!file.originalname.match(/\.(jpg|png|jpeg)$/)) {
