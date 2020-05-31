@@ -16,7 +16,7 @@
   },
   "devDependencies": {},
   "scripts": {
-    "dev" : "env-cmd  -f config/dev.env nodemon server.js"
+    "dev": "env-cmd  -f config/dev.env nodemon server.js"
   },
   "keywords": [],
   "author": "praful <praful.chandra@yahoo.com>",
