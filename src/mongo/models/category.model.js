@@ -16,8 +16,8 @@ const CategorySchema = new mongoose.Schema({
   timestamps : true
 });
 
-CategorySchema.pre("remove",async(next)=>{
-
+CategorySchema.pre("remove",async function(next){
+    
   this.Products.map(async prod=>{
     await Products.findByIdAndRemove(prod);
   })

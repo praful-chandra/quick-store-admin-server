@@ -46,7 +46,7 @@ const ProductsSchema = new mongoose.Schema(
 
 ProductsSchema.pre("remove", async function (next) {
   const prod = this;
-  const cate = await Category.findOne({ _id: this.categoryId });
+  const cate = await Category.findById({ _id: this.categoryId });
   cate.Products = cate.Products.filter((id) => id !== prod._id);
 
   await cate.save();
