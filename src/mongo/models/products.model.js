@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const Category = require("./category.model");
 const ProductsSchema = new mongoose.Schema(
   {
     name: {
@@ -34,23 +33,26 @@ const ProductsSchema = new mongoose.Schema(
       },
     },
     categoryId: {
-      type: mongoose.Types.ObjectId,
+      type: mongoose.Types.ObjectId ,ref:'category',
       required: true,
     },
     description: String,
   },
   {
     timestamps: true,
-  }
+  }  
 );
 
 ProductsSchema.pre("remove", async function (next) {
+  const Categories = require("./category.model");
   const prod = this;
-  const cate = await Category.findById({ _id: this.categoryId });
-  cate.Products = cate.Products.filter((id) => id !== prod._id);
+  const cate = await Categories.findById({ _id: this.categoryId });
+  cate.Products = cate.Products.filter((id) => !id.equals(prod._id));
+
 
   await cate.save();
   next();
+
 });
 
 ProductsSchema.methods.toJSON = function(){

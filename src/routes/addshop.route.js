@@ -89,7 +89,7 @@ router.post(
       .save()
       .then(() => {
         newProduct.save().then((data) => {
-          res.status(201).json({success : true})
+          res.status(201).json({success : true,_id : data._id})
         });
       })
       .catch((err) => res.status(500).json({ error: "Server error" }));

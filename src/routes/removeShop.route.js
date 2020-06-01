@@ -17,8 +17,7 @@ router.delete("/deleteProduct", AuthmiddleWare, async (req, res) => {
   product.remove().then(() =>
   res.json({ success: true })
 );
-  } catch (err) {
-    
+  } catch (err) {      
     res.status(500).json("error");
   }
 });
