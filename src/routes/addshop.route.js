@@ -52,7 +52,7 @@ router.post(
       image,
     })
       .save()
-      .then(() => res.status(201).json({success : true}))
+      .then((cate) => res.status(201).json({success : true,_id : cate._id}))
       .catch((err) => res.status(500).json(err));
   }
 );
