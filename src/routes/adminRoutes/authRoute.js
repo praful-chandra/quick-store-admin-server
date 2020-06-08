@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const router = express.Router();
 
 //MiddleWares
-const authMiddleWare = require("../middleware/authMiddleWare");
+const authMiddleWare = require("../../middleware/authMiddleWare");
 //Models
 const AdminModel = mongoose.model("admin");
 

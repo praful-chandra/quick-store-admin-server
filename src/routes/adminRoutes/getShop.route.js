@@ -2,9 +2,9 @@ const express = require("express");
 const mongoose = require("mongoose");
 const router = express.Router();
 
-const AuthMiddleware = require("../middleware/authMiddleWare");
+const AuthMiddleware = require("../../middleware/authMiddleWare");
 
-const getOptions = require("../utils/getOprions");
+const getOptions = require("../../utils/getOprions");
 
 const Product = mongoose.model("product");
 const Category = mongoose.model("category");

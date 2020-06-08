@@ -4,14 +4,14 @@ const multer = require("multer");
 const sharp = require("sharp");
 const router = express.Router();
 
-const AuthMiddleware = require("../middleware/authMiddleWare");
+const AuthMiddleware = require("../../middleware/authMiddleWare");
 const Category = mongoose.model("category");
 const Product = mongoose.model("product");
 const Campaign = mongoose.model("campaign");
 const Sale = mongoose.model("sale");
 const Coupon = mongoose.model("coupon");
 
-const doesContain = require("../utils/doesContain.util");
+const doesContain = require("../../utils/doesContain.util");
 
 const upload = multer({
   limits: {

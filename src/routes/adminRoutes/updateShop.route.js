@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const router = express.Router();
 const multer = require("multer");
 const sharp = require("sharp");
-const AuthMiddleware = require("../middleware/authMiddleWare");
+const AuthMiddleware = require("../../middleware/authMiddleWare");
 
 const Category = mongoose.model("category");
 const Product = mongoose.model("product");
@@ -12,7 +12,7 @@ const Sale = mongoose.model("sale");
 const Coupon = mongoose.model("coupon");
 const Order = mongoose.model("order");
 
-const chekAllProdExist = require("../utils/checkAllProductsExist");
+const chekAllProdExist = require("../../utils/checkAllProductsExist");
 
 const upload = multer({
   limits: {

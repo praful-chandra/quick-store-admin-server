@@ -1,12 +1,12 @@
 const express = require("express");
 require("./src/mongo/mongo");
 
-const authRoute = require("./src/routes/authRoute");
-const addShopRoute = require("./src/routes/addshop.route");
-const updateShopRoute = require("./src/routes/updateShop.route");
-const getShopRoute = require("./src/routes/getShop.route");
+const authRoute = require("./src/routes/adminRoutes/authRoute");
+const addShopRoute = require("./src/routes/adminRoutes/addshop.route");
+const updateShopRoute = require("./src/routes/adminRoutes/updateShop.route");
+const getShopRoute = require("./src/routes/adminRoutes/getShop.route");
 const serveImageRoute = require("./src/routes/serveImage.route");
-const RemoveShopRoute = require("./src/routes/removeShop.route");
+const RemoveShopRoute = require("./src/routes/adminRoutes/removeShop.route");
 const app = express();
 
 const PORT = process.env.PORT;
@@ -26,5 +26,7 @@ app.use("/api/admin/shop",addShopRoute);
 app.use("/api/admin/shop",updateShopRoute);
 app.use("/api/admin/shop",RemoveShopRoute);
 app.use("/api/admin/get",getShopRoute);
+
+
 
 app.use("/api/serveImage/",serveImageRoute);
