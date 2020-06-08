@@ -13,9 +13,9 @@ const ProductsSchema = new mongoose.Schema(
       type: Number,
       required: true,
     },
-    status:{
-      type : Boolean,
-      default :false
+    status: {
+      type: Boolean,
+      default: false,
     },
     price: {
       type: Number,
@@ -33,14 +33,16 @@ const ProductsSchema = new mongoose.Schema(
       },
     },
     categoryId: {
-      type: mongoose.Types.ObjectId ,ref:'category',
+      type: mongoose.Types.ObjectId,
+      ref: "category",
       required: true,
     },
     description: String,
+    avaliableSizes : []
   },
   {
     timestamps: true,
-  }  
+  }
 );
 
 ProductsSchema.pre("remove", async function (next) {
@@ -49,19 +51,17 @@ ProductsSchema.pre("remove", async function (next) {
   const cate = await Categories.findById({ _id: this.categoryId });
   cate.Products = cate.Products.filter((id) => !id.equals(prod._id));
 
-
   await cate.save();
   next();
-
 });
 
-ProductsSchema.methods.toJSON = function(){
+ProductsSchema.methods.toJSON = function () {
   const product = this.toObject();
 
-  product.image = `/api/serveImage/product/${product._id}`
-  
+  product.image = `/api/serveImage/product/${product._id}`;
+
   return product;
-}
+};
 
 const Products = mongoose.model("product", ProductsSchema);
 

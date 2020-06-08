@@ -14,3 +14,5 @@ require("./models/campaign.model");
 require("./models/sales.model");
 require("./models/coupons.model");
 require("./models/order.model");
+
+require("./models/user.model");

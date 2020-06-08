@@ -7,6 +7,10 @@ const updateShopRoute = require("./src/routes/adminRoutes/updateShop.route");
 const getShopRoute = require("./src/routes/adminRoutes/getShop.route");
 const serveImageRoute = require("./src/routes/serveImage.route");
 const RemoveShopRoute = require("./src/routes/adminRoutes/removeShop.route");
+
+const userAuthRoute = require("./src/routes/userRoutes/userauth.route");
+const getRoute = require("./src/routes/userRoutes/get.route");
+
 const app = express();
 
 const PORT = process.env.PORT;
@@ -27,6 +31,7 @@ app.use("/api/admin/shop",updateShopRoute);
 app.use("/api/admin/shop",RemoveShopRoute);
 app.use("/api/admin/get",getShopRoute);
 
-
+app.use("/api/auth",userAuthRoute);
 
 app.use("/api/serveImage/",serveImageRoute);
+app.use("/api/get/",getRoute);
