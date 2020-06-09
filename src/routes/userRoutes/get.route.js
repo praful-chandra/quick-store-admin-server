@@ -71,7 +71,7 @@ router.post("/categorieswithProducts", async (req, res) => {
   res.status(200).json(category);
 });
 
-router.get("/campaign", async (req, res) => {
+router.post("/campaign", async (req, res) => {
   const { filters, only, sort, limit, skip } = getOptions(req.body);
 
   const campaign = await Campaign.find(only, filters)
@@ -93,7 +93,7 @@ router.get("/sale", async (req, res) => {
   res.status(200).json(sale);
 });
 
-router.get("/coupon", async (req, res) => {
+router.post("/coupon", async (req, res) => {
   const { filters, only, sort, limit, skip } = getOptions(req.body);
 
   const coupon = await Coupon.find(only, filters)
