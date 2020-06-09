@@ -21,6 +21,10 @@ const ProductsSchema = new mongoose.Schema(
       type: Number,
       required: true,
     },
+    for:{
+      type : String,
+      required : true
+    },
     discount: {
       type: Number,
       default: 0,
@@ -59,6 +63,7 @@ ProductsSchema.methods.toJSON = function () {
   const product = this.toObject();
 
   product.image = `/api/serveImage/product/${product._id}`;
+
 
   return product;
 };

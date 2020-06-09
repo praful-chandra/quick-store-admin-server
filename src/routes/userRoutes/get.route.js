@@ -16,7 +16,6 @@ router.get("/test", (req, res) => {
 
 router.post("/products", async (req, res) => {
   const { filters, only, sort, limit, skip } = getOptions(req.body);
-  
 
   const products = await Product.find(only, filters)
     .sort(sort)
@@ -27,17 +26,47 @@ router.post("/products", async (req, res) => {
     .sort(sort)
     .countDocuments();
 
-    
   res.status(200).json({ products, totalCount });
 });
 
-router.get("/categories", async (req, res) => {
+router.post("/categories", async (req, res) => {
   const { filters, only, sort, limit, skip } = getOptions(req.body);
 
-  const category = await Category.find(only, filters)
+  let category = await Category.find(only, filters)
     .sort(sort)
     .limit(limit)
     .skip(skip);
+
+  res.status(200).json(category);
+});
+router.post("/categorieswithProducts", async (req, res) => {
+  const { filters, only, sort, limit, skip } = getOptions(req.body);
+
+  let category = await Category.find(only, filters)
+    .sort(sort)
+    .limit(limit)
+    .skip(skip);
+
+  async function someFunction() {
+    const j = category.length;
+    const cat = [];
+    for (let i = 0; i < j; i++) {
+      // wait for the promise to resolve before advancing the for loop
+      const Products = await Product.find({
+        _id: { $in: category[i].Products },
+      }).limit(4);
+
+      cat.push({
+        ...category[i]._doc,
+        Products,
+        image: `/api/serveImage/category/${category[i]._id}`,
+      });
+    }
+
+    return cat;
+  }
+
+  category = await someFunction();
 
   res.status(200).json(category);
 });
