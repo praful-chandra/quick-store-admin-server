@@ -82,7 +82,7 @@ router.post("/campaign", async (req, res) => {
   res.status(200).json(campaign);
 });
 
-router.get("/sale", async (req, res) => {
+router.post("/sale", async (req, res) => {
   const { filters, only, sort, limit, skip } = getOptions(req.body);
 
   const sale = await Sale.find(only, filters)
